@@ -21,13 +21,13 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - uses: ./.github/workflows/spark_maven
+      - uses: sparkutils/spark-maven-action@main
         with:
           title: Building site against maven profile for version - ${{ inputs.profile }}
           # bare bones for site setup
           script: |
             echo $(mvn help:evaluate -Dexpression=project.version -q -DforceStdout -P ${{ inputs.profile }}) > version.txt
-      - uses: ./.github/workflows/mkdocs
+      - uses: sparkutils/mkdocs-action@main
         with:
           # save the previous version coverage and mvn site
           copyFromScript: |
