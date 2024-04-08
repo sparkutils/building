@@ -35,7 +35,7 @@ jobs:
         ( (endsWith(needs.site.outputs.version, '-SNAPSHOT') && github.ref == 'refs/heads/main') ||
           contains(github.event.head_commit.message, '~cut-release') )
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4.1.2
         with:
           submodules: recursive
       - uses: sparkutils/spark-maven-action@main
