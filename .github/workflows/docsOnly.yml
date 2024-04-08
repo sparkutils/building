@@ -21,6 +21,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+        with:
+          submodules: recursive
       - uses: sparkutils/spark-maven-action@main
         with:
           title: Building site against maven profile for version - ${{ inputs.profile }}

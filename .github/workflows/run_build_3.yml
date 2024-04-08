@@ -31,6 +31,8 @@ jobs:
     if: contains(github.event.head_commit.message, '~docsOnly') != true
     steps:
       - uses: actions/checkout@v3
+        with:
+          submodules: recursive
       - uses: sparkutils/spark-maven-action@main
         with:
           title: Build ${{ matrix.profile }},${{ matrix.scala }},${{ matrix.third }} with ${{ inputs.testString }}
