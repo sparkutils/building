@@ -19,6 +19,18 @@ on:
         required: false
         type: string
         description: run extra commands on the shell, must be a .sh file location without the extension
+      sparkVersion:
+        required: false
+        type: string
+        description: Spark version to use
+      scalaSparkVersion:
+        required: false
+        type: string
+        description: Spark scala version to use
+      hadoopVersion:
+        required: false
+        type: string
+        description: Hadoop version to use
     secrets:
       MAVEN_GPG_PRIVATE_KEY:
         required: true
