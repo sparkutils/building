@@ -15,6 +15,10 @@ on:
         required: false
         type: string
         description: location of maven target on the matrix build be upload-artifact?
+      additionalShellCommand:
+        required: false
+        type: string
+        description: run extra commands on the shell, must be a .sh file location without the extension
     secrets:
       MAVEN_GPG_PRIVATE_KEY:
         required: true
@@ -44,6 +48,7 @@ jobs:
             mvn $MAVEN_CLI_OPTS clean ${{ inputs.testString }} install -P ${{ matrix.profile }},${{ matrix.scala }}
           gpgKey: ${{ secrets.MAVEN_GPG_PRIVATE_KEY }}
           storeTarget: ${{ inputs.storeTarget }}
+          additionalShellCommand: ${{ inputs.additionalShellCommand }}.sh ${{ matrix.profile }},${{ matrix.scala }}
         env:
           OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           OSSRH_TOKEN: ${{ secrets.OSSRH_TOKEN }}
