@@ -11,6 +11,10 @@ on:
         required: true
         type: string
         description: the json matrix to build against
+      storeTarget:
+        required: false
+        type: boolean
+        description: should the maven target on the matrix build be upload-artifact?
     secrets:
       MAVEN_GPG_PRIVATE_KEY:
         required: true
@@ -39,6 +43,7 @@ jobs:
           script: |
             mvn $MAVEN_CLI_OPTS clean ${{ inputs.testString }} install -P ${{ matrix.profile }},${{ matrix.scala }}
           gpgKey: ${{ secrets.MAVEN_GPG_PRIVATE_KEY }}
+          storeTarget: ${{ inputs.storeTarget }}
         env:
           OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           OSSRH_TOKEN: ${{ secrets.OSSRH_TOKEN }}
