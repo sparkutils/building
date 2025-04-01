@@ -61,6 +61,9 @@ jobs:
           gpgKey: ${{ secrets.MAVEN_GPG_PRIVATE_KEY }}
           storeTarget: ${{ inputs.storeTarget }}
           additionalShellCommand: ${{ inputs.additionalShellCommand }}.sh ${{ matrix.profile }},${{ matrix.scala }}
+          sparkVersion: ${{ inputs.sparkVersion }}
+          scalaSparkVersion: ${{ inputs.scalaSparkVersion }}
+          hadoopVersion: ${{ inputs.hadoopVersion }}
         env:
           OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           OSSRH_TOKEN: ${{ secrets.OSSRH_TOKEN }}
