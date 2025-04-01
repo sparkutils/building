@@ -13,8 +13,8 @@ on:
         description: the json matrix to build against
       storeTarget:
         required: false
-        type: boolean
-        description: should the maven target on the matrix build be upload-artifact?
+        type: string
+        description: location of maven target on the matrix build be upload-artifact?
     secrets:
       MAVEN_GPG_PRIVATE_KEY:
         required: true
