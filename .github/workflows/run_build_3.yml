@@ -10,7 +10,7 @@ on:
       theMatrix:
         required: true
         type: string
-        description: the json matrix to build against
+        description: the json matrix to build against - there should be no spaces or illegal path symbols in the profile names
       storeTarget:
         required: false
         type: string
@@ -60,6 +60,7 @@ jobs:
             mvn $MAVEN_CLI_OPTS clean ${{ inputs.testString }} install -P ${{ matrix.profile }},${{ matrix.scala }},${{ matrix.third }}
           gpgKey: ${{ secrets.MAVEN_GPG_PRIVATE_KEY }}
           storeTarget: ${{ inputs.storeTarget }}
+          storeTargetNane: ${{ matrix.profile }}___${{ matrix.scala }}
           additionalShellCommand: ${{ inputs.additionalShellCommand }}.sh ${{ matrix.profile }},${{ matrix.scala }}
           sparkVersion: ${{ inputs.sparkVersion }}
           scalaSparkVersion: ${{ inputs.scalaSparkVersion }}
