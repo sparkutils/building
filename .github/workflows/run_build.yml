@@ -69,7 +69,8 @@ jobs:
         with:
           title: Build ${{ matrix.profile }},${{ matrix.scala }} with ${{ inputs.testString }}
           script: |
-            mvn $MAVEN_CLI_OPTS clean ${{ inputs.testString }} install -P ${{ matrix.profile }},${{ matrix.scala }}
+            export MAVEN_OPTS=${{ inputs.mvnOpts }}
+            mvn ${{ inputs.mvnCliOpts }} clean ${{ inputs.testString }} install -P ${{ matrix.profile }},${{ matrix.scala }}
           gpgKey: ${{ secrets.MAVEN_GPG_PRIVATE_KEY }}
           storeTarget: ${{ inputs.storeTarget }}
           storeTargetNane: ${{ matrix.profile }}___${{ matrix.scala }}
