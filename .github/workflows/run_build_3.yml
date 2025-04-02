@@ -69,7 +69,7 @@ jobs:
         with:
           title: Build ${{ matrix.profile }},${{ matrix.scala }},${{ matrix.third }} with ${{ inputs.testString }}
           script: |
-            export MAVEN_OPTS=${{ inputs.mvnOpts }}
+            export MAVEN_OPTS="${{ inputs.mvnOpts }}"
             mvn ${{ inputs.mvnCliOpts }} clean ${{ inputs.testString }} install -P ${{ matrix.profile }},${{ matrix.scala }},${{ matrix.third }}
           gpgKey: ${{ secrets.MAVEN_GPG_PRIVATE_KEY }}
           storeTarget: ${{ inputs.storeTarget }}
