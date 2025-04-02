@@ -35,6 +35,14 @@ on:
         required: false
         type: string
         description: jdk version to use
+      mvnCliOpts:
+        required: false
+        type: string
+        description: mvn cli opts
+      mvnOpts:
+        required: false
+        type: string
+        description: used to set MAVEN_OPTS
     secrets:
       MAVEN_GPG_PRIVATE_KEY:
         required: true
@@ -70,6 +78,8 @@ jobs:
           scalaSparkVersion: ${{ inputs.scalaSparkVersion }}
           hadoopVersion: ${{ inputs.hadoopVersion }}
           jdk: ${{ inputs.jdk }}
+          mvnOpts: ${{ inputs.mvnOpts }}
+          mvnCliOpts: ${{ inputs.mvnCliOpts }}
         env:
           OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           OSSRH_TOKEN: ${{ secrets.OSSRH_TOKEN }}
