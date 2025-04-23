@@ -7,6 +7,38 @@ on:
         required: true
         type: string
         description: the json matrix to build against
+      storeTarget:
+        required: false
+        type: string
+        description: location of maven target on the matrix build be upload-artifact?
+      additionalShellCommand:
+        required: false
+        type: string
+        description: run extra commands on the shell, must be a .sh file location without the extension
+      sparkVersion:
+        required: false
+        type: string
+        description: Spark version to use
+      sparkScalaVersion:
+        required: false
+        type: string
+        description: Spark scala version to use
+      hadoopVersion:
+        required: false
+        type: string
+        description: Hadoop version to use
+      jdk:
+        required: false
+        type: string
+        description: jdk version to use
+      mvnCliOpts:
+        required: false
+        type: string
+        description: mvn cli opts
+      mvnOpts:
+        required: false
+        type: string
+        description: used to set MAVEN_OPTS
     secrets:
       MAVEN_GPG_PRIVATE_KEY:
         required: true
@@ -44,6 +76,12 @@ jobs:
           script: |
             mvn $MAVEN_CLI_OPTS -DskipTests -Dclassifiers=tests clean deploy -P ${{ matrix.profile }},${{ matrix.scala }},${{ matrix.third }}
           gpgKey: ${{ secrets.MAVEN_GPG_PRIVATE_KEY }}
+          sparkVersion: ${{ inputs.sparkVersion }}
+          sparkScalaVersion: ${{ inputs.sparkScalaVersion }}
+          hadoopVersion: ${{ inputs.hadoopVersion }}
+          jdk: ${{ inputs.jdk }}
+          mvnOpts: ${{ inputs.mvnOpts }}
+          mvnCliOpts: ${{ inputs.mvnCliOpts }}
         env:
           OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           OSSRH_TOKEN: ${{ secrets.OSSRH_TOKEN }}
