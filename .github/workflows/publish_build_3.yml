@@ -74,7 +74,7 @@ jobs:
         with:
           title: Build ${{ matrix.profile }},${{ matrix.scala }},${{ matrix.third }} with ${{ inputs.testString }}
           script: |
-            mvn $MAVEN_CLI_OPTS -DskipTests -Dclassifiers=tests clean deploy -P ${{ matrix.profile }},${{ matrix.scala }},${{ matrix.third }}
+            mvn ${{ inputs.mvnCliOpts }} -DskipTests -Dclassifiers=tests clean deploy -P ${{ matrix.profile }},${{ matrix.scala }},${{ matrix.third }}
           gpgKey: ${{ secrets.MAVEN_GPG_PRIVATE_KEY }}
           sparkVersion: ${{ inputs.sparkVersion }}
           sparkScalaVersion: ${{ inputs.sparkScalaVersion }}
