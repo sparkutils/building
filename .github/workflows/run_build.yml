@@ -46,9 +46,9 @@ on:
     secrets:
       MAVEN_GPG_PRIVATE_KEY:
         required: true
-      OSSRH_USERNAME:
+      CENTRAL_USERNAME:
         required: true
-      OSSRH_TOKEN:
+      CENTRAL_TOKEN:
         required: true
       MAVEN_GPG_PASSPHRASE:
         required: true
@@ -82,6 +82,6 @@ jobs:
           mvnOpts: ${{ inputs.mvnOpts }}
           mvnCliOpts: ${{ inputs.mvnCliOpts }}
         env:
-          OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
-          OSSRH_TOKEN: ${{ secrets.OSSRH_TOKEN }}
+          CENTRAL_USERNAME: ${{ secrets.CENTRAL_USERNAME }}
+          CENTRAL_TOKEN: ${{ secrets.CENTRAL_TOKEN }}
           MAVEN_GPG_PASSPHRASE: ${{ secrets.MAVEN_GPG_PASSPHRASE }}

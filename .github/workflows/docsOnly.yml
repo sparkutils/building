@@ -8,12 +8,30 @@ on:
         required: true
         type: string
         description: the full csv maven profile
-
-env:
-  MAVEN_CLI_OPTS: "--batch-mode --errors --fail-at-end --show-version -DinstallAtEnd=true -DdeployAtEnd=true"
-  MAVEN_CLI_TESTSHADES_OPTS: "-f testShades/pom.xml --batch-mode --errors --fail-at-end --show-version -DinstallAtEnd=true -DdeployAtEnd=true"
-  # -Dmaven.repo.local=.m2/repository not needed on github, seems ~/.m2 is supported / expected
-  MAVEN_OPTS: "-Dhttp.keepAlive=false -Dmaven.wagon.http.pool=false -Dmaven.wagon.http.retryHandler.class=standard -Dmaven.wagon.http.retryHandler.count=3 -Dhttps.protocols=TLSv1.2 -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=WARN -Dorg.slf4j.simpleLogger.showDateTime=true -Djava.awt.headless=true"
+      sparkVersion:
+        required: false
+        type: string
+        description: Spark version to use
+      sparkScalaVersion:
+        required: false
+        type: string
+        description: Spark scala version to use
+      hadoopVersion:
+        required: false
+        type: string
+        description: Hadoop version to use
+      jdk:
+        required: false
+        type: string
+        description: jdk version to use
+      mvnCliOpts:
+        required: false
+        type: string
+        description: mvn cli opts
+      mvnOpts:
+        required: false
+        type: string
+        description: used to set MAVEN_OPTS
 
 jobs:
   site:
@@ -26,6 +44,12 @@ jobs:
       - uses: sparkutils/spark-maven-action@main
         with:
           title: Building site against maven profile for version - ${{ inputs.profile }}
+          sparkVersion: ${{ inputs.sparkVersion }}
+          sparkScalaVersion: ${{ inputs.sparkScalaVersion }}
+          hadoopVersion: ${{ inputs.hadoopVersion }}
+          jdk: ${{ inputs.jdk }}
+          mvnOpts: ${{ inputs.mvnOpts }}
+          mvnCliOpts: ${{ inputs.mvnCliOpts }}
           # bare bones for site setup
           script: |
             echo $(mvn help:evaluate -Dexpression=project.version -q -DforceStdout -P ${{ inputs.profile }}) > version.txt
