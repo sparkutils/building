@@ -78,7 +78,7 @@ jobs:
               SKIP_GPG=""
             fi
             mvn ${{ inputs.mvnCliOpts }} clean ${{ inputs.testString }} $SKIP_GPG install -P ${{ matrix.profile }},${{ matrix.scala }}
-          gpgKey: ${{ secrets.MAVEN_GPG_PRIVATE_KEY }}
+          gpgKey: ${{ secrets.MAVEN_GPG_PRIVATE_KEY || '' }}
           storeTarget: ${{ inputs.storeTarget }}
           storeTargetNane: ${{ matrix.profile }}___${{ matrix.scala }}
           additionalShellCommand: ${{ inputs.additionalShellCommand }}.sh ${{ matrix.profile }},${{ matrix.scala }}
@@ -89,6 +89,6 @@ jobs:
           mvnOpts: ${{ inputs.mvnOpts }}
           mvnCliOpts: ${{ inputs.mvnCliOpts }}
         env:
-          CENTRAL_USERNAME: ${{ secrets.CENTRAL_USERNAME }}
-          CENTRAL_TOKEN: ${{ secrets.CENTRAL_TOKEN }}
-          MAVEN_GPG_PASSPHRASE: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
+          CENTRAL_USERNAME: ${{ secrets.CENTRAL_USERNAME || '' }}
+          CENTRAL_TOKEN: ${{ secrets.CENTRAL_TOKEN || '' }}
+          MAVEN_GPG_PASSPHRASE: ${{ secrets.MAVEN_GPG_PASSPHRASE || '' }}
