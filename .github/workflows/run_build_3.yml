@@ -45,13 +45,13 @@ on:
         description: used to set MAVEN_OPTS
     secrets:
       MAVEN_GPG_PRIVATE_KEY:
-        required: true
+        required: false
       CENTRAL_USERNAME:
-        required: true
+        required: false
       CENTRAL_TOKEN:
-        required: true
+        required: false
       MAVEN_GPG_PASSPHRASE:
-        required: true
+        required: false
 
 jobs:
   theRun:
@@ -70,7 +70,14 @@ jobs:
           title: Build ${{ matrix.profile }},${{ matrix.scala }},${{ matrix.third }} with ${{ inputs.testString }}
           script: |
             export MAVEN_OPTS="${{ inputs.mvnOpts }}"
-            mvn ${{ inputs.mvnCliOpts }} clean ${{ inputs.testString }} install -P ${{ matrix.profile }},${{ matrix.scala }},${{ matrix.third }}
+            if [ "${{ github.event_name }}" == "pull_request" ]; then
+              echo Skipping GPG from PR
+              SKIP_GPG="-Dgpg.skip"
+            else
+              echo Running GPG
+              SKIP_GPG=""
+            fi
+            mvn ${{ inputs.mvnCliOpts }} clean ${{ inputs.testString }} $SKIP_GPG install -P ${{ matrix.profile }},${{ matrix.scala }},${{ matrix.third }}
           gpgKey: ${{ secrets.MAVEN_GPG_PRIVATE_KEY }}
           storeTarget: ${{ inputs.storeTarget }}
           storeTargetName: ${{ matrix.profile }}___${{ matrix.scala }}
